@@ -9,4 +9,8 @@
     <string name="create_user_success">User created successfully!</string>
     <string name="error_enter_email">Please enter valid email address</string>
     <string name="error_enter_password">Please enter valid password</string>
+    <string name="no_devices_found">No devices found!</string>
+    <string name="logout">Logout</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_success">You will receive an email with instruction to reset password</string>
 </resources>

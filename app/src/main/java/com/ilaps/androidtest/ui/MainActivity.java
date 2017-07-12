@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mAdapter = new BluetoothDevicesAdapter(this, devicesNames);
+        mRecyclerView.setAdapter(mAdapter);
+
         updateDevices();
 
     }
@@ -114,37 +117,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateDevices() {
-        devicesNames.add("one");
-        devicesNames.add("one");
-        devicesNames.add("two");
-        devicesNames.add("two");
-        devicesNames.add("three");
-        devicesNames.add("three");
-        devicesNames.add("four");
-        devicesNames.add("four");
-        devicesNames.add("five");
-        devicesNames.add("five");
-        devicesNames.add("six");
-        devicesNames.add("six");
-        devicesNames.add("seven");
-        devicesNames.add("seven");
-        devicesNames.add("eight");
-        devicesNames.add("eight");
-        devicesNames.add("nine");
-        devicesNames.add("nine");
-        devicesNames.add("ten");
-        devicesNames.add("ten");
-        devicesNames.add("aaa");
-        devicesNames.add("bb");
-        devicesNames.add("ccc");
-        devicesNames.add("ddd");
-        devicesNames.add("eee");
-        devicesNames.add("offffne");
-        devicesNames.add("ggggg");
-        devicesNames.add("onhhhhe");
+//        devicesNames.add("one");
+//        devicesNames.add("one");
+//        devicesNames.add("two");
+//        devicesNames.add("two");
+//        devicesNames.add("three");
+//        devicesNames.add("three");
+//        devicesNames.add("four");
+//        devicesNames.add("four");
+//        devicesNames.add("five");
+//        devicesNames.add("five");
+//        devicesNames.add("six");
+//        devicesNames.add("six");
+//        devicesNames.add("seven");
+//        devicesNames.add("seven");
+//        devicesNames.add("eight");
+//        devicesNames.add("eight");
+//        devicesNames.add("nine");
+//        devicesNames.add("nine");
+//        devicesNames.add("ten");
+//        devicesNames.add("ten");
+//        devicesNames.add("aaa");
+//        devicesNames.add("bb");
+//        devicesNames.add("ccc");
+//        devicesNames.add("ddd");
+//        devicesNames.add("eee");
+//        devicesNames.add("offffne");
+//        devicesNames.add("ggggg");
+//        devicesNames.add("onhhhhe");
 
-        mAdapter = new BluetoothDevicesAdapter(this, devicesNames);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
         checkEmptyList();
     }
 
@@ -164,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 Log.d("device found", device.getName());
                 devicesNames.add(device.getName());
+                updateDevices();
             }
         }
     };
