@@ -12,5 +12,6 @@
     <string name="no_devices_found">No devices found!</string>
     <string name="logout">Logout</string>
     <string name="reset_password">Reset Password</string>
+    <string name="enable_bluetooth">Please turn-on bluetooth</string>
     <string name="reset_password_success">You will receive an email with instruction to reset password</string>
 </resources>

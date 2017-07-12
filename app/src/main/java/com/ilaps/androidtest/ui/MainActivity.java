@@ -10,13 +10,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.ilaps.androidtest.R;
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private BluetoothDevicesAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private TextView emptyListViewMsg;
     private List<String> devicesNames;
 
 
@@ -56,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(bluetoothDiscoveryReceiver, filter);
         bluetoothAdapter.startDiscovery();
 
-        emptyListViewMsg = (TextView) findViewById(R.id.no_devices);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -65,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new BluetoothDevicesAdapter(this, devicesNames);
         mRecyclerView.setAdapter(mAdapter);
 
-        updateDevices();
-
+        if(bluetoothAdapter == null || !bluetoothAdapter.isEnabled()){
+            Toast.makeText(this,getString(R.string.enable_bluetooth),Toast.LENGTH_SHORT).show();
+            moveTaskToBack(true);
+        }
     }
 
 
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
+        finish();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 
@@ -108,46 +107,9 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void checkEmptyList() {
-        if (mAdapter.getItemCount() == 0) {
-            emptyListViewMsg.setVisibility(View.VISIBLE);
-        } else {
-            emptyListViewMsg.setVisibility(View.GONE);
-        }
-    }
 
     private void updateDevices() {
-//        devicesNames.add("one");
-//        devicesNames.add("one");
-//        devicesNames.add("two");
-//        devicesNames.add("two");
-//        devicesNames.add("three");
-//        devicesNames.add("three");
-//        devicesNames.add("four");
-//        devicesNames.add("four");
-//        devicesNames.add("five");
-//        devicesNames.add("five");
-//        devicesNames.add("six");
-//        devicesNames.add("six");
-//        devicesNames.add("seven");
-//        devicesNames.add("seven");
-//        devicesNames.add("eight");
-//        devicesNames.add("eight");
-//        devicesNames.add("nine");
-//        devicesNames.add("nine");
-//        devicesNames.add("ten");
-//        devicesNames.add("ten");
-//        devicesNames.add("aaa");
-//        devicesNames.add("bb");
-//        devicesNames.add("ccc");
-//        devicesNames.add("ddd");
-//        devicesNames.add("eee");
-//        devicesNames.add("offffne");
-//        devicesNames.add("ggggg");
-//        devicesNames.add("onhhhhe");
-
         mAdapter.notifyDataSetChanged();
-        checkEmptyList();
     }
 
 
@@ -164,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.d("device found", device.getName());
                 devicesNames.add(device.getName());
                 updateDevices();
             }
