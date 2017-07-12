@@ -7,12 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.ilaps.androidtest.ui.adapter.BluetoothDevicesAdapter;
 
 /**
  * Created by Sarah on 7/12/17.
@@ -41,14 +42,7 @@ public class MainActivity extends BaseActivity {
         registerReceiver(bluetoothDiscoveryReceiver, filter);
         bluetoothAdapter.startDiscovery();
 
-        emptyListViewMsg = (TextView) findViewById(R.id.no_devices);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new CityAdapter(this, database.getAllCities());
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -63,20 +57,6 @@ public class MainActivity extends BaseActivity {
     public void onDestroy() {
         unregisterReceiver(bluetoothDiscoveryReceiver);
         super.onDestroy();
-    }
-
-    private void checkEmptyList(){
-        if(mAdapter.getItemCount() == 0){
-            emptyListViewMsg.setVisibility(View.VISIBLE);
-        }else{
-            emptyListViewMsg.setVisibility(View.GONE);
-        }
-    }
-
-    private void updateDevices(){
-        mAdapter = new CityAdapter(getContext(), database.getAllCities());
-        mRecyclerView.setAdapter(mAdapter);
-        checkEmptyList();
     }
 
 
