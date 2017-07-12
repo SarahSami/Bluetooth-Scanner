@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "868128314082",
+    "firebase_url": "https://androidtest-c15e3.firebaseio.com",
+    "project_id": "androidtest-c15e3",
+    "storage_bucket": "androidtest-c15e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868128314082:android:01fe30a5691e7617",
+        "android_client_info": {
+          "package_name": "com.ilaps.androidtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868128314082-9vnlu7jq84isthf4ohr4jduub9rdc406.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjp6YswAQ6qdV-sSTmp8IIi3x-1auErdU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
