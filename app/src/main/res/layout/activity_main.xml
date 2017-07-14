@@ -9,10 +9,21 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_margin="16dp"
         android:scrollbars="vertical" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_devices"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:text="@string/start_search"
+        android:onClick="searchDevices"
+        android:textAllCaps="false"
+        android:padding="16dp"/>
 
 
 

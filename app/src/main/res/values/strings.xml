@@ -13,5 +13,7 @@
     <string name="logout">Logout</string>
     <string name="reset_password">Reset Password</string>
     <string name="enable_bluetooth">Please turn-on bluetooth</string>
+    <string name="start_search">Search for devices</string>
+    <string name="stop_search">Stop searching</string>
     <string name="reset_password_success">You will receive an email with instruction to reset password</string>
 </resources>

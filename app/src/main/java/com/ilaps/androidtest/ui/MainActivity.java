@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,10 +31,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+    private Button searchButton;
     private BluetoothDevicesAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private List<String> devicesNames;
-
+    private boolean searching;
+    private BluetoothAdapter bluetoothAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = new ProgressBar(this);
         progressBar.setIndeterminate(true);
 
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         devicesNames = new ArrayList<>();
 
         IntentFilter filter = new IntentFilter();
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(bluetoothDiscoveryReceiver, filter);
         bluetoothAdapter.startDiscovery();
 
+        searching = true;
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -61,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new BluetoothDevicesAdapter(this, devicesNames);
         mRecyclerView.setAdapter(mAdapter);
 
-        if(bluetoothAdapter == null || !bluetoothAdapter.isEnabled()){
-            Toast.makeText(this,getString(R.string.enable_bluetooth),Toast.LENGTH_SHORT).show();
+        searchButton = (Button) findViewById(R.id.search_devices);
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Toast.makeText(this, getString(R.string.enable_bluetooth), Toast.LENGTH_SHORT).show();
             moveTaskToBack(true);
         }
+        searchButton.setText(getString(R.string.stop_search));
     }
 
 
@@ -93,6 +99,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void searchDevices(View v) {
+        if (!searching) {
+            searchButton.setText(getString(R.string.stop_search));
+            bluetoothAdapter.startDiscovery();
+            searching = true;
+            devicesNames.clear();
+            updateDevices();
+
+        } else {
+            searchButton.setText(getString(R.string.start_search));
+            bluetoothAdapter.cancelDiscovery();
+            searching = false;
+        }
+    }
 
     private void logout() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
